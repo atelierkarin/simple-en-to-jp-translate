@@ -1,0 +1,68 @@
+This is an apple.;これはリンゴです。
+This is an orange.;これはみかんです。
+That is an elephant.;あれはゾウです。
+That is a piano.;あれはピアノです。
+This is a dog.;これは犬です。
+That is a cat.;あれは猫です。
+That is a dog.;あれは犬です。
+This is milk.;これは牛乳です。
+This is Japan.;これは日本です。
+This is a pillow.;これは枕です。
+That is an orange.;あれはみかんです。
+This is an elephant.;これはゾウです。
+This is a piano.;これはピアノです。
+That is a pillow.;あれは枕です。
+This is a cat.;これは猫です。
+That is a figure.;あれはフィギュアです。
+This is a book.;これは本です。
+That is a book.;あれは本です。
+This is a bed.;これはベッドです。
+Is this a figure?;これはフィギュアですか。
+Is this an apple?;これはリンゴですか。
+Is this an orange?;これはみかんですか。
+Is that an elephant?;あれはゾウですか。
+Is that a piano?;あれはピアノですか。
+Is this a dog?;これは犬ですか。
+Is that a cat?;あれは猫ですか。
+Is that a dog?;あれは犬ですか。
+Is this milk?;これは牛乳ですか。
+Is this Japan?;これは日本ですか。
+Is this a pillow?;これは枕ですか。
+Is that an orange?;あれはみかんですか。
+Is this an elephant;これはゾウですか。
+Is this a piano.;これはピアノですか。
+Is that a pillow.;あれは枕ですか。
+Is this a cat.;これは猫ですか。
+Is that a figure.;あれはフィギュアですか。
+Is this a book.;これは本ですか。
+Is that a book.;あれは本ですか。
+Is this a bed.;これはベッドですか。
+An apple and an orange.;リンゴとみかんです。
+An orange and an apple.;みかんとリンゴです。
+A cat and a dog.;猫と犬です。
+A dog and a cat.;犬と猫です。
+A cat and a piano.;猫とピアノです。
+A piano and a cat.;ピアノと猫です。
+A dog and a piano.;犬とピアノです。
+A piano and a dog.;ピアノと犬です。
+A cat and an apple.;猫とリンゴです。
+An apple and a cat.;リンゴと猫です。
+A dog and an apple.;犬とリンゴです。
+An apple and a dog.;リンゴと犬です。
+A piano and an apple.;ピアノとリンゴです。
+An apple and a piano.;リンゴとピアノです。
+A piano and an orange.;ピアノとみかんです。
+An orange and a piano.;みかんとピアノです。
+A cat and an orange.;猫とみかんです。
+An orange and a cat.;みかんと猫です。
+An elephant and a cat.;ゾウと猫です。
+A cat and an elephant.;猫とゾウです。
+Japan.;日本です。
+A cat.;猫です。
+A dog.;犬です。
+A bed.;ベッドです。
+Milk.;牛乳です。
+A dog is drinking milk.;犬が牛乳を飲んでいます。
+Is a cat drinking milk?;猫は牛乳を飲んでいますか。
+Is a dog drinking milk?;犬は牛乳を飲んでいますか。
+A cat is drinking milk.;猫が牛乳を飲んでいます。
