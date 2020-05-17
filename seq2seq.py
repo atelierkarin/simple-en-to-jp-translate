@@ -81,52 +81,42 @@ class Decoder:
     affine_W = (np.random.randn(H, V) / np.sqrt(H)).astype("f")
     affine_b = np.zeros(V).astype("f")
 
-    self.layers = [
-      TimeEmbedding(embed_W),
-      TimeDropout(dropout_ratio),
-      TimeLSTM(lstm_Wx1, lstm_Wh1, lstm_b1, stateful=True),
-      TimeDropout(dropout_ratio),
-      TimeAffine(affine_W, affine_b)
-    ]
-
-    self.embed = self.layers[0]
-    self.lstm = [self.layers[x] for x in [2]]
-    self.drops = [self.layers[x] for x in [1,3]]
-    self.affine = self.layers[4]
+    self.embed = TimeEmbedding(embed_W)
+    self.lstm = TimeLSTM(lstm_Wx1, lstm_Wh1, lstm_b1, stateful=True)
+    self.affine = TimeAffine(affine_W, affine_b)
 
     self.params, self.grads = [], []
 
-    for layer in self.layers:
+    for layer in (self.embed, self.lstm, self.affine):
       self.params += layer.params
       self.grads += layer.grads
   
-  def predict(self, xs, train_flg=False):
-    for layer in self.drops:
-      layer.train_flg = train_flg
-    for layer in self.layers:
-      xs = layer.forward(xs)
-    return xs
-  
   def forward(self, xs, h, train_flg=True):
-    self.lstm[0].set_state(h)
-    score = self.predict(xs, train_flg)
+    self.lstm.set_state(h)
+
+    out = self.embed.forward(xs)
+    out = self.lstm.forward(out)
+    score = self.affine.forward(out)
     return score
   
-  def backward(self, dout):
-    for layer in reversed(self.layers):
-      dout = layer.backward(dout)
-    dh = self.lstm[0].dh
+  def backward(self, dscore):
+    dout = self.affine.backward(dscore)
+    dout = self.lstm.backward(dout)
+    dout = self.embed.backward(dout)
+    dh = self.lstm.dh
 
     return dh
   
   def generate(self, h, start_id, sample_size):
     sampled = []
     sample_id = start_id
-    self.lstm[0].set_state(h)
+    self.lstm.set_state(h)
 
     for _ in range(sample_size):
       x = np.array(sample_id).reshape((1, 1))
-      score = self.predict(x)
+      out = self.embed.forward(x)
+      out = self.lstm.forward(out)
+      score = self.affine.forward(out)
 
       sample_id = np.argmax(score.flatten())
       sampled.append(int(sample_id))

@@ -1,31 +1,18 @@
 import sys
 sys.path.append("..")
-from gen_data import GenData
+from common import config
+config.GPU = True
 
+from gen_data import GenData
 from common.optimizer import Adam
 from common.trainer import Trainer
-from seq2seq import Seq2seq
-
-def eval_seq2seq(model, question, correct, id_to_word_q, id_to_word_a, verbos=False, is_reverse=False):
-  correct = correct.flatten()
-  start_id = correct[0]
-  correct = correct[1:]
-  guess = model.generate(question, start_id, len(correct))
-
-  if is_reverse:
-    question = question[0]
-    question = question[::-1]
-
-  question = ' '.join([id_to_word_q[int(c)] for c in question.flatten()])
-  correct = ''.join([id_to_word_a[int(c)] for c in correct])
-  guess = ''.join([id_to_word_a[int(c)] for c in guess])
-
-  print("{}: {} = {}? -> {}".format(question, correct, guess, guess == correct))
-
-  return 1 if guess == correct else 0
+from eval_tools import eval_seq2seq
+#from seq2seq import Seq2seq
+from peeky_seq2seq import PeekySeq2seq
+from common.gpu import to_cpu, to_gpu
 
 d = GenData()
-(x_train, t_train), (x_test, t_test) = d.load_data("data.txt", seed=1984)
+(x_train, t_train), (x_test, t_test) = d.load_corpus(file_name="data.txt")
 word_to_id_q, word_to_id_a, id_to_word_q, id_to_word_a = d.get_vocab()
 
 is_reverse = True
@@ -41,13 +28,15 @@ batch_size = 5
 max_epoch = 300
 max_grad = 5.0
 
-model = Seq2seq(vocab_size_x, wordvec_size, hidden_size, vocab_size_t)
+model = PeekySeq2seq(vocab_size_x, wordvec_size, hidden_size, vocab_size_t)
 optimizer = Adam()
 trainer = Trainer(model, optimizer)
 
 acc_list = []
 for epoch in range(max_epoch):
   print("epoch {}".format(epoch))
+  x_train = to_gpu(x_train)
+  t_train = to_gpu(t_train)
   trainer.fit(x_train, t_train, max_epoch=1, batch_size=batch_size, max_grad=max_grad)
 
   correct_num = 0

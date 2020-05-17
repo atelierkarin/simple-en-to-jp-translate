@@ -31,6 +31,7 @@ def preprocess(text, custom_dic=None, skip_symbol=True):
     token_list = ["N" if x.isdigit() else x for x in token_list]
     token_list = ["ﾜﾗ" if x == "ｗ" else x for x in token_list]
     token_list = ["ﾜﾗ" if x == "ｗｗ" else x for x in token_list]
+    token_list.remove(' ')
     words_list.append(token_list)
   
   word_to_id = {}
