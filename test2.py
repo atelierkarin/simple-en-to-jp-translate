@@ -8,7 +8,8 @@ from common.optimizer import Adam
 from common.trainer import Trainer
 from eval_tools import eval_seq2seq
 #from seq2seq import Seq2seq
-from peeky_seq2seq import PeekySeq2seq
+#from seq2seq.peeky_seq2seq import PeekySeq2seq
+from attention.attention_bi_seq2seq import AttentionBiSeq2seq
 from common.gpu import to_cpu, to_gpu
 
 d = GenData()
@@ -25,11 +26,12 @@ vocab_size_x = len(word_to_id_q)
 vocab_size_t = len(word_to_id_a)
 wordvec_size = 1000
 hidden_size = 1000
-batch_size = 100
-max_epoch = 10
+batch_size = 50
+max_epoch = 20
 max_grad = 5.0
 
-model = PeekySeq2seq(vocab_size_x, wordvec_size, hidden_size, vocab_size_t)
+#model = PeekySeq2seq(vocab_size_x, wordvec_size, hidden_size, vocab_size_t)
+model = AttentionBiSeq2seq(vocab_size_x, wordvec_size, hidden_size, vocab_size_t)
 optimizer = Adam()
 trainer = Trainer(model, optimizer)
 

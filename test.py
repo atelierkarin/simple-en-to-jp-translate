@@ -8,7 +8,9 @@ from common.optimizer import Adam
 from common.trainer import Trainer
 from eval_tools import eval_seq2seq
 #from seq2seq import Seq2seq
-from peeky_seq2seq import PeekySeq2seq
+#from seq2seq.peeky_seq2seq import PeekySeq2seq
+#from attention.attention_seq2seq import AttentionSeq2seq
+from attention.attention_bi_seq2seq import AttentionBiSeq2seq
 from common.gpu import to_cpu, to_gpu
 
 d = GenData()
@@ -28,7 +30,9 @@ batch_size = 5
 max_epoch = 300
 max_grad = 5.0
 
-model = PeekySeq2seq(vocab_size_x, wordvec_size, hidden_size, vocab_size_t)
+#model = PeekySeq2seq(vocab_size_x, wordvec_size, hidden_size, vocab_size_t)
+#model = AttentionSeq2seq(vocab_size_x, wordvec_size, hidden_size, vocab_size_t)
+model = AttentionBiSeq2seq(vocab_size_x, wordvec_size, hidden_size, vocab_size_t)
 optimizer = Adam()
 trainer = Trainer(model, optimizer)
 
@@ -37,6 +41,7 @@ for epoch in range(max_epoch):
   print("epoch {}".format(epoch))
   x_train = to_gpu(x_train)
   t_train = to_gpu(t_train)
+  print("X train size = {}".format(x_train.shape))
   trainer.fit(x_train, t_train, max_epoch=1, batch_size=batch_size, max_grad=max_grad)
 
   correct_num = 0
